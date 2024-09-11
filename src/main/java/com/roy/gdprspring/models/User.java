@@ -1,6 +1,14 @@
-package com.roy.gdprspring.aspects;
+package com.roy.gdprspring.models;
 
-public class User {
+import com.roy.gdprspring.annotations.Pii;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
+    String name;
+    @Pii
+    String email;
+
     public String getName() {
         return name;
     }
@@ -9,8 +17,6 @@ public class User {
         this.name = name;
     }
 
-    String name;
-
     public String getEmail() {
         return email;
     }
@@ -18,9 +24,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    @Pii
-    String email;
 
     @Override
     public String toString() {

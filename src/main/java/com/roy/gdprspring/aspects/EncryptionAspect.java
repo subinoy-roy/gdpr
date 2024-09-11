@@ -1,5 +1,6 @@
 package com.roy.gdprspring.aspects;
 
+import com.roy.gdprspring.annotations.Pii;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,19 +9,18 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Aspect
 @Component
 public class EncryptionAspect {
-    @Pointcut("@annotation(com.roy.gdprspring.aspects.Encrypt)")
+    @Pointcut("@annotation(com.roy.gdprspring.annotations.Encrypt)")
     public void encryptPointCut() {}
 
     @Around("encryptPointCut()")
     public Object encryptAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
-        Object[] mod_args = Arrays.stream(args).map(s -> {
-            Class clazz = s.getClass();
+        Object[] mod_args = Arrays.stream(args).peek(s -> {
+            Class<?> clazz = s.getClass();
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
                 if(field.isAnnotationPresent(Pii.class)){
@@ -32,7 +32,6 @@ public class EncryptionAspect {
                     }
                 }
             }
-            return s;
         }).toArray();
         return joinPoint.proceed(mod_args);
     }
