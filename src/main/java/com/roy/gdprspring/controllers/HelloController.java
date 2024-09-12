@@ -1,8 +1,7 @@
 package com.roy.gdprspring.controllers;
 
 import com.roy.gdprspring.annotations.Encrypt;
-import com.roy.gdprspring.aspects.Logged;
-import com.roy.gdprspring.logging.MaskingConverter;
+import com.roy.gdprspring.annotations.Logged;
 import com.roy.gdprspring.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

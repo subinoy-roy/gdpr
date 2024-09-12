@@ -16,7 +16,7 @@ public class LoggerAspect {
 
     Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
-    @Pointcut("@annotation(Logged)")
+    @Pointcut("@annotation(com.roy.gdprspring.annotations.Logged)")
     public void logged() {}
 
     @Before("logged()")
