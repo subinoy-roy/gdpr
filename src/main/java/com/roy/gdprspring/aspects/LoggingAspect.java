@@ -12,9 +12,9 @@ import java.util.Arrays;
 
 @Aspect
 @Component
-public class LoggerAspect {
+public class LoggingAspect {
 
-    Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
+    Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Pointcut("@annotation(com.roy.gdprspring.annotations.Logged)")
     public void logged() {}

@@ -1,5 +1,6 @@
 package com.roy.gdprspring.aspects;
 
+import com.roy.gdprspring.annotations.MaskedField;
 import com.roy.gdprspring.annotations.PiiField;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,27 +13,25 @@ import java.util.Arrays;
 
 @Aspect
 @Component
-public class EncryptionAspect {
-    @Pointcut("@annotation(com.roy.gdprspring.annotations.Encrypt)")
-    public void encryptPointCut() {}
+public class ResponseMaskingAspect {
+    @Pointcut("@annotation(com.roy.gdprspring.annotations.MaskedResponse)")
+    public void maskedResponsePointCut() {}
 
-    @Around("encryptPointCut()")
-    public Object encryptAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object[] args = joinPoint.getArgs();
-        Object[] mod_args = Arrays.stream(args).peek(s -> {
+    @Around("maskedResponsePointCut()")
+    public Object maskedResponsePointCut(ProceedingJoinPoint joinPoint) throws Throwable {
+        return joinPoint.proceed(Arrays.stream(joinPoint.getArgs()).peek(s -> {
             Class<?> clazz = s.getClass();
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                if(field.isAnnotationPresent(PiiField.class)){
+                if(field.isAnnotationPresent(PiiField.class)||field.isAnnotationPresent(MaskedField.class)){
                     field.setAccessible(true);
                     try {
-                        field.set(s,field.get(s)+"_ENCRYPTED");
+                        field.set(s,"<-- HIDDEN -->");
                     } catch (IllegalAccessException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
-        }).toArray();
-        return joinPoint.proceed(mod_args);
+        }).toArray());
     }
 }

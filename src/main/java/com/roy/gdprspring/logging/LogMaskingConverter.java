@@ -2,18 +2,18 @@ package com.roy.gdprspring.logging;
 
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import com.roy.gdprspring.annotations.Masked;
-import com.roy.gdprspring.annotations.Pii;
+import com.roy.gdprspring.annotations.MaskedField;
+import com.roy.gdprspring.annotations.PiiField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-public class MaskingConverter extends ClassicConverter {
+public class LogMaskingConverter extends ClassicConverter {
 
     private static final String PII_MASK = "*********";
-    private static final Logger log = LoggerFactory.getLogger(MaskingConverter.class);
+    private static final Logger log = LoggerFactory.getLogger(LogMaskingConverter.class);
     private final AnnotationUtil annotationUtil = new AnnotationUtil();
 
     @Override
@@ -42,7 +42,7 @@ public class MaskingConverter extends ClassicConverter {
         Class<?> objClass = obj.getClass();
         Field[] fields = objClass.getDeclaredFields();
         for (Field field : fields) {
-            if (annotationUtil.isAnnotationPresent(field, Pii.class)|| annotationUtil.isAnnotationPresent(field, Masked.class)) {
+            if (annotationUtil.isAnnotationPresent(field, PiiField.class)|| annotationUtil.isAnnotationPresent(field, MaskedField.class)) {
                 field.setAccessible(true);  // Make private fields accessible
                 try {
                     // Mask the field if it's a string (or adjust for other types)

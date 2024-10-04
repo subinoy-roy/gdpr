@@ -1,15 +1,15 @@
 package com.roy.gdprspring.models;
 
-import com.roy.gdprspring.annotations.Masked;
-import com.roy.gdprspring.annotations.Pii;
+import com.roy.gdprspring.annotations.MaskedField;
+import com.roy.gdprspring.annotations.PiiField;
 
 import java.io.Serializable;
 
 public class User implements Serializable {
     String name;
-    @Pii
+    @PiiField
     String email;
-    @Masked
+    @MaskedField
     String instagramHandle;
 
     public String getName() {
