@@ -1,7 +1,7 @@
 package com.roy.gdprspring.services;
 
 import com.roy.gdprspring.annotations.Encrypt;
-import com.roy.gdprspring.models.User;
+import com.roy.gdprspring.dtos.User;
 import org.springframework.stereotype.Service;
 
 @Service

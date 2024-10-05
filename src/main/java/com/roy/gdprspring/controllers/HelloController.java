@@ -3,7 +3,7 @@ package com.roy.gdprspring.controllers;
 //import com.roy.gdprspring.annotations.Encrypt;
 import com.roy.gdprspring.annotations.Logged;
 import com.roy.gdprspring.annotations.MaskedResponse;
-import com.roy.gdprspring.models.User;
+import com.roy.gdprspring.dtos.User;
 import com.roy.gdprspring.services.HelloService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

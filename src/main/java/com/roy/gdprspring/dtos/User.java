@@ -1,4 +1,4 @@
-package com.roy.gdprspring.models;
+package com.roy.gdprspring.dtos;
 
 import com.roy.gdprspring.annotations.MaskedField;
 import com.roy.gdprspring.annotations.PiiField;
