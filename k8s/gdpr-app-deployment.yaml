@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gdpr-app
+  labels:
+    app: gdpr-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gdpr-app
+  template:
+    metadata:
+      name: gdpr-app
+      labels:
+        app: gdpr-app
+    spec:
+      containers:
+        - name: gdpr-app
+          image: subinoyroy/spring-gdpr
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: SPRING_DATASOURCE_HOST
+                  name: postgres-config
+            - name: SPRING_DATASOURCE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SPRING_DATASOURCE_PORT
+                  name: postgres-config
+            - name: SPRING_DATASOURCE_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: SPRING_DATASOURCE_DBNAME
+                  name: postgres-config
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_USER
+                  name: postgres-secrets
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: postgres-secrets
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gdpr-app-service
+spec:
+  selector:
+    app: gdpr-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080
+  type: NodePort
