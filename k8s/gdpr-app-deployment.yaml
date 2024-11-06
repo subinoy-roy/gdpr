@@ -1,26 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gdpr-app
-  labels:
-    app: gdpr-app
+  name: gdpr-app-api
+  namespace: gdpr
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: gdpr-app
+      app.com.roy/name: gdpr-app
+      app.com.roy/component: api
+      app.com.roy/instance: gdpr-app-api
   template:
     metadata:
-      name: gdpr-app
       labels:
-        app: gdpr-app
+        app.com.roy/name: gdpr-app
+        app.com.roy/component: api
+        app.com.roy/instance: gdpr-app-api
     spec:
       containers:
-        - name: gdpr-app
-          image: subinoyroy/spring-gdpr
-          imagePullPolicy: IfNotPresent
+        - name: gdpr-app-api
+          image: subinoyroy/spring-gdpr-v1
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              port: 8081
+              path: /hello
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 8081
+              path: /hello
+            periodSeconds: 5
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
           env:
             - name: SPRING_DATASOURCE_HOST
               valueFrom:
@@ -52,13 +65,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gdpr-app-service
+  name: gdpr-app-api
+  namespace: gdpr
 spec:
   selector:
-    app: gdpr-app
+    app.com.roy/name: gdpr-app
+    app.com.roy/component: api
+    app.com.roy/instance: gdpr-app-api
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
-      nodePort: 30080
+      port: 80
+      targetPort: 8081
   type: NodePort

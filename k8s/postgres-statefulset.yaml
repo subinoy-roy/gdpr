@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: postgres
   namespace: gdpr
@@ -45,6 +45,7 @@ spec:
         - name: postgres-data
           emptyDir: {}
       restartPolicy: Always
+  serviceName: postgres-service
 ---
 apiVersion: v1
 kind: Service
@@ -57,4 +58,4 @@ spec:
     - protocol: TCP
       port: 5432
       targetPort: 5432
-  type: ClusterIP
+  type: NodePort

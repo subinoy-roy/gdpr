@@ -5,12 +5,21 @@ import com.roy.gdprspring.annotations.PiiField;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class UserDto implements Serializable {
+    long id;
     String name;
     @PiiField
     String email;
     @MaskedField
     String instagramHandle;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -39,6 +48,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
+                "id=" + id +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", instagramHandle='" + instagramHandle + '\'' +
