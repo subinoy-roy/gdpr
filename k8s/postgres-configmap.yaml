@@ -4,7 +4,7 @@ metadata:
   name: postgres-config
   namespace: gdpr
 data:
-  POSTGRES_DB: "pgdb"
+  POSTGRES_DB: "defaultdb"
   SPRING_DATASOURCE_HOST: "postgres-service"
-  SPRING_DATASOURCE_PORT: "5432"
-  SPRING_DATASOURCE_DBNAME: "pgdb"
+  SPRING_DATASOURCE_PORT: "26859"
+  SPRING_DATASOURCE_DBNAME: "defaultdb"
