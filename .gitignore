@@ -34,3 +34,5 @@ build/
 
 ### Qodana
 qodana.yaml
+
+k8s/postgres-secret.yaml
