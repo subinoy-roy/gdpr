@@ -3,14 +3,16 @@ kind: Ingress
 metadata:
   name: gdpr-app-ingress
   namespace: gdpr
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   ingressClassName: nginx
   rules:
-    - host: springboot.local
     - http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /gdpr/(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: gdpr-app-api
