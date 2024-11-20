@@ -302,6 +302,3 @@ public class MaskedResponseAdvice implements ResponseBodyAdvice<Object> {
 
 The code provided here is a sample code, enough to give you an idea about what can be done. This code is not production ready and there is no optimization. But this will give you a base to start with.
 
-**Repo:**
-https://github.com/subinoy-roy/gdpr
-
