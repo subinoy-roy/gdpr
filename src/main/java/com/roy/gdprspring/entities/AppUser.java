@@ -1,9 +1,6 @@
 package com.roy.gdprspring.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class AppUser {
@@ -13,7 +10,9 @@ public class AppUser {
     private Long id;
     
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String email;
+    @Column(columnDefinition = "TEXT")
     private String instagramHandle;
 
     public AppUser() {
