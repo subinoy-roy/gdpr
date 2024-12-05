@@ -60,6 +60,8 @@ spec:
                 secretKeyRef:
                   key: POSTGRES_PASSWORD
                   name: postgres-secrets
+            - name: ENCRYPTION_SERVICE_URL
+              value: http://encrypo-app:80
       restartPolicy: Always
 ---
 apiVersion: v1

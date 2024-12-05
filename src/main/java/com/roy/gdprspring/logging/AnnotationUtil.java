@@ -6,10 +6,24 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Utility class for handling annotations.
+ */
 public class AnnotationUtil {
+
+    /**
+     * Default constructor for AnnotationUtil.
+     */
     public AnnotationUtil() {
     }
 
+    /**
+     * Checks if a specific annotation is present on a given field.
+     *
+     * @param field the field to check for the annotation
+     * @param clazz the class of the annotation to look for
+     * @return true if the annotation is present, false otherwise
+     */
     boolean isAnnotationPresent(Field field, Class<?> clazz) {
         // This section of code is kept for future reference
         // Arrays.stream(fields).forEach(field -> {

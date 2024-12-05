@@ -10,12 +10,21 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
+/**
+ * LogMaskingConverter is a custom logback converter that masks fields annotated with @PiiField or @MaskedField.
+ */
 public class LogMaskingConverter extends ClassicConverter {
 
     private static final String PII_MASK = "*********";
     private static final Logger log = LoggerFactory.getLogger(LogMaskingConverter.class);
     private final AnnotationUtil annotationUtil = new AnnotationUtil();
 
+    /**
+     * Converts the logging event to a string, masking any fields annotated with @PiiField or @MaskedField.
+     *
+     * @param event the logging event
+     * @return the formatted log message with masked fields
+     */
     @Override
     public String convert(ILoggingEvent event) {
         String message = event.getFormattedMessage();
@@ -34,6 +43,11 @@ public class LogMaskingConverter extends ClassicConverter {
         return message;
     }
 
+    /**
+     * Masks the fields of the given object that are annotated with @PiiField or @MaskedField.
+     *
+     * @param obj the object whose fields are to be masked
+     */
     private void maskFields(Object obj) {
         if (obj == null) {
             return;
